@@ -1,5 +1,5 @@
 // Troque localhost pelo IP do servidor se necessário
-const API_URL = "http://45.232.231.148:8080/status?token=MUDE_ESSE_TOKEN";
+const API_URL = "http://sd-br5.blazebr.com:8080/status?token=MUDE_ESSE_TOKEN";
 
 async function loadServerStatus() {
     try {
