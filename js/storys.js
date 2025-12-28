@@ -38,7 +38,7 @@ async function loadPlayers() {
 
         list.innerHTML = players.map(p => `
             <li style="display:flex;align-items:center;gap:8px;">
-                <img src="https://visage.surgeplay.com/face/32/${p.name}" width="24" height="24">
+                <img src="https://mc-heads.net/avatar/${p.name}" width="24" height="24">
                 <span>${p.name}</span>
             </li>
         `).join('');
