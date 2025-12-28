@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nox</title>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <link rel="icon" type="image/png" href="https://i.imgur.com/aScLFAa.png">
+  <meta name="og:site_name" content="Nox" />
+  <meta name="og:type" content="object" />
+  <meta name="og:image" content="https://i.imgur.com/aScLFAa.png">
+  <meta name="og:title" content="Changelog" />
+  <meta name="og:url" content="https://nox.lat/changelog" />
+  <meta name="theme-color" content="#0000AA" />
+  <meta name="og:description" content="Changelog oficial do Nox." />
+</head>
+<body>
+  <div class="page-bg"></div>
+
+  <div class="site">
+    <header class="site-header">
+      <h1 class="brand">NOX</h1>
+
+      <div class="nav-wrap">
+        <nav class="main-nav">
+          <a href="index.html">INÍCIO</a>
+          <a href="changelog.html">CHANGELOG</a>
+          <a href="contact.html">CONTATO & DIVERSOS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="columns">
+      <section class="col left">
+        <div class="col-inner">
+            <h3>Doações</h3>
+            <p>Manter o Nox online, envolve custos como host e divulgações. As doações ajudam a cobrir esses gastos e a manter o servidor funcionando.</p>
+
+            <p>Apoiadores que doarem R$20,00 ou mais recebem os beneficios de sigma.<br>Eles são:</p>
+
+            <img src="images/donate.png" alt="">
+
+            <p>Por favor, inclua seu nome de usuário e seu username do Discord na descrição do pagamento.</p>
+
+          <a class="btn-donate" href="https://www.livepix.gg/redenox">LivePix</a>
+        </div>
+      </section>
+
+      <section class="col middle changelog-middle">
+        <div class="col-inner">
+          <h2>CHANGELOG</h2>
+          <p>O changelog oficial onde publicamos novas atualizações e recursos do servidor. Nosso <a href="https://dsc.gg/redenox/">Discord</a> conta com uma versão mais atualizada disso.</p>
+          <div class="changelog-container">
+
+          </div>
+        </div>
+      </section>
+
+      <aside class="col right">
+        <div class="col-inner">
+          <div class="server-status">
+            <span class="status-dot"></span>
+            <span>Servidor Online</span>
+          </div>
+
+          <div class="stats">
+            <p>
+              Jogadores: <strong id="players">0/67</strong> <br>
+              Versão: <strong id="version">1.12.2</strong> <br>
+              TPS: <strong id="tps">20</strong>
+            </p>
+          </div>
+
+          <ul class="players">
+            <li>Carregando jogadores...</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+    <script>
+    async function loadChangelogs() {
+    const container = document.querySelector('.changelog-container');
+    if (!container) return;
+
+    container.innerHTML = `<p>Loading changelogs...</p>`;
+
+    try {
+        // ✅ JSON estático no GitHub Pages (path relativo)
+        const response = await fetch('https://nox.lat/api/changelog.json');
+
+        if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+        container.innerHTML = `<p>No changelogs available.</p>`;
+        return;
+        }
+
+        // Sort newest first
+        data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+        let html = '';
+
+        data.forEach(changelog => {
+        const date = new Date(changelog.created_at);
+        const formattedDate =
+            `${String(date.getDate()).padStart(2, '0')}/` +
+            `${String(date.getMonth() + 1).padStart(2, '0')}/` +
+            `${date.getFullYear()}`;
+
+        html += `
+            <div class="changelog-entry">
+            <h4 class="changelog-date">${formattedDate}</h4>
+            ${changelog.lines.map(line => `<p>- ${line}</p>`).join('')}
+            <div class="changelog-bottom"></div>
+            </div>
+        `;
+        });
+
+        container.innerHTML = html;
+
+    } catch (err) {
+        console.error('Failed to load changelogs:', err);
+        container.innerHTML = `<p style="color:red;">Failed to load changelogs.</p>`;
+    }
+    }
+    // 🔥 garante que o DOM já existe
+    document.addEventListener('DOMContentLoaded', loadChangelogs);
+    </script>
+
+  
+  loadChangelogs();
+
+</script>
+  <script src="js/status.js"></script>
+</body>
+</html>

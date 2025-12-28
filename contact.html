@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nox</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" type="image/png" href="https://i.imgur.com/aScLFAa.png" />
+  <meta name="og:site_name" content="Nox" />
+  <meta name="og:type" content="object" />
+  <meta name="og:image" content="https://i.imgur.com/aScLFAa.png" />
+  <meta name="og:title" content="Contact & Misc" />
+  <meta name="og:url" content="https://nox.lat/contact" />
+  <meta name="theme-color" content="#0000AA" />
+  <meta name="og:description" content="Contato & Diversas informações sobre o Nox." />
+</head>
+<body>
+  <div class="page-bg"></div>
+
+  <div class="site">
+    <header class="site-header">
+      <h1 class="brand">NOX</h1>
+
+      <div class="nav-wrap">
+        <nav class="main-nav">
+          <a href="index.html">INÍCIO</a>
+          <a href="changelog.html">CHANGELOG</a>
+          <a href="contact.html">CONTATO & DIVERSOS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="columns">
+      <!-- Coluna esquerda -->
+      <section class="col left">
+        <div class="col-inner">
+          <h3>Doações</h3>
+          <p>Manter o Nox online, envolve custos como host e divulgações. As doações ajudam a cobrir esses gastos e a manter o servidor funcionando.</p>
+
+          <p>Apoiadores que doarem R$20,00 ou mais recebem os benefícios de sigma.<br>Eles são:</p>
+
+          <img src="images/donate.png" alt="Doações">
+
+          <p>Por favor, inclua seu nome de usuário e seu username do Discord na descrição do pagamento.</p>
+
+          <a class="btn-donate" href="https://www.livepix.gg/redenox">LivePix</a>
+        </div>
+      </section>
+
+      <!-- Coluna do meio -->
+      <section class="col middle">
+        <div class="col-inner">
+          <h2>Contato & Diversos</h2>
+          <p>O <strong>Nox</strong> é mantido e administrado por <a href="https://guns.lol/zvitorinsane">zVitorInsane</a>, com a intenção de se tornar um dos melhores servidores anarquícos do Brasil.</p>
+
+          <strong>Especificações do Servidor:</strong>
+          <div class="specs">
+            <p>
+              - Intel Xeon E5-2687Wv4 v6 @ 3.6GHz <br>
+              - 10GB de RAM alocados <br>
+              - HD de 50GB <br>
+              - Hospedado no Brasil 🇧🇷
+            </p>
+          </div>
+
+          <h3>Contato</h3>
+          <p>Fique à vontade para entrar em contato conosco para quaisquer dúvidas, sugestões ou outros assuntos. <br><br>
+            Discord: <a href="https://dsc.gg/redenox/">discord.gg/nox</a> <br>
+            E-mail: <a href="mailto:contato.noxgg@gmail.com">contato.noxgg@gmail.com</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- Coluna direita -->
+      <aside class="col right">
+        <div class="col-inner">
+          <div class="server-status">
+            <span class="status-dot"></span>
+            <span>Servidor Online</span>
+          </div>
+
+          <div class="stats">
+            <p>
+              Jogadores: <strong id="players">0/67</strong> <br>
+              Versão: <strong id="version">1.12.2</strong> <br>
+              TPS: <strong id="tps">20</strong>
+            </p>
+          </div>
+
+          <ul class="players">
+            <li>Carregando jogadores...</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="js/status.js"></script>
+</body>
+</html>
