@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nox</title>
+
+  <link rel="icon" type="image/png" href="https://i.imgur.com/aScLFAa.png">
+  <meta name="og:site_name" content="Nox">
+  <meta name="og:type" content="object">
+  <meta name="og:image" content="https://i.imgur.com/aScLFAa.png">
+  <meta name="og:title" content="NOX">
+  <meta name="og:url" content="https://nox.lat">
+  <meta name="theme-color" content="#0000AA">
+  <meta name="og:description" content="1.12.2 Servidor Anárquico de Minecraft">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="page-bg"></div>
+
+  <div class="site">
+    <header class="site-header">
+      <h1 class="brand"><span class="velo">NOX</h1>
+
+      <div class="nav-wrap">
+        <nav class="main-nav">
+          <a href="index.html">INÍCIO</a>
+          <a href="changelog.html">CHANGELOG</a>
+          <a href="contact.html">CONTATO & DIVERSOS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="columns">
+      <section class="col left">
+        <div class="col-inner">
+            <h3>Doações</h3>
+            <p>Manter o Nox online, envolve custos como host e divulgações. As doações ajudam a cobrir esses gastos e a manter o servidor funcionando.</p>
+
+            <p>Apoiadores que doarem R$20,00 ou mais recebem os beneficios de sigma.<br>Eles são:</p>
+
+            <img src="images/donate.png" alt="">
+
+            <p>Por favor, inclua seu nome de usuário e seu username do Discord na descrição do pagamento.</p>
+
+          <a class="btn-donate" href="https://www.livepix.gg/redenox">LivePix</a>
+        </div>
+      </section>
+
+      <section class="col middle">
+        <div class="col-inner">
+          <h2>NOX.LAT</h2>
+          <p>O <strong>Nox</strong> é um servidor anárquico de Minecraft relativamente novo, focado em uma experiência <em>sem limites e sem regras</em>. O IP é <strong>nox.lat</strong>.
+            <br><br>O servidor está ativo desde <strong>20 de dezembro de 2025</strong> e um total de <strong id="totalPlayers">-</strong> jogadores já entraram, com um tamanho de mundo de <strong id="worldSize">-</strong>.</p>
+
+          <h3>Discord</h3>
+          <p>Entre no discord: <a href="https://dsc.gg/redenox">discord.gg/nox</a></p>
+
+          <h3>Ajude a trazer mais jogadores</h3>
+          <p>Espalhe a palavra! Conte aos seus amigos sobre o Nox e ajude o nosso servidor a crescer. Você também pode votar e compartilhar em fóruns de Minecraft.</p>
+
+          <h3>Changelog</h3>
+          <div id="latest-changelog"><p style="color:red;">Erro ao carregar a ultima changelog.</p></div>
+        </div>
+      </section>
+
+      <aside class="col right">
+        <div class="col-inner">
+          <div class="server-status" id="server-status">
+            <span>Checando o status...</span>
+          </div>
+
+          <div class="stats">
+            <p>
+              Jogadores: <strong id="players">0/67</strong> <br>
+              Versão: <strong id="version">1.12.2</strong> <br>
+              TPS: <strong id="tps">20</strong>
+            </p>
+          </div>
+
+          <ul class="players">
+            <li>Carregando jogadores...</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    async function loadLatestChangelog() {
+      const container = document.getElementById('latest-changelog');
+      container.innerHTML = `<p>Carregando a ultima changelog...</p>`;
+
+      try {
+        const response = await fetch('https://nox.lat/api/changelog.json');
+        const data = await response.json();
+        const latest = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+
+        if (!latest) {
+          container.innerHTML = `<p>Nenhuma changelog disponivel.</p>`;
+          return;
+        }
+
+        const date = new Date(latest.created_at);
+        const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+
+        let html = `<h4 class="changelog-date">Latest - ${formattedDate}</h4>`;
+        latest.lines.forEach(line => {
+          html += `<p id="line">- ${line}</p>`;
+        });
+        html += `<p id="changelog-footer"><em>Olhe toda a <a href="changelog.html">changelog</a></em></p>`;
+        container.innerHTML = html;
+
+      } catch (err) {
+        console.error('Falha ao carregar changelog:', err);
+        container.innerHTML = `<p style="color:red;">Falha ao carregar a ultima changelog.</p>`;
+      }
+    }
+
+    // Run all loaders
+    loadLatestChangelog();
+  </script>
+  <script src="config.js"></script>
+  <script src="js/status.js"></script>
+
+
+</body></html>
