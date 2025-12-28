@@ -1,6 +1,3 @@
-// Troque localhost pelo IP do servidor se necessário
-const API_URL = "http://api.nox.lat:8080/status?token=MUDE_ESSE_TOKEN";
-
 async function loadServerStatus() {
     try {
         const res = await fetch(API_URL);
