@@ -79,65 +79,52 @@
       </aside>
     </main>
   </div>
+  <script>
+  async function loadChangelogs() {
+      const container = document.querySelector('.changelog-container');
+      if (!container) return;
 
-    <script>
-    async function loadChangelogs() {
-    const container = document.querySelector('.changelog-container');
-    if (!container) return;
+      container.innerHTML = `<p>Carregando changelogs...</p>`;
 
-    container.innerHTML = `<p>Loading changelogs...</p>`;
+      try {
+          const response = await fetch('https://nox.lat/api/changelog.json'); // substitua pela sua API
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-    try {
-        // ✅ JSON estático no GitHub Pages (path relativo)
-        const response = await fetch('https://nox.lat/api/changelog.json');
+          const data = await response.json();
 
-        if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-        }
+          if (!Array.isArray(data) || data.length === 0) {
+              container.innerHTML = `<p>Nenhum changelog disponível.</p>`;
+              return;
+          }
 
-        const data = await response.json();
+          // Ordena do mais recente para o mais antigo
+          data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-        if (!Array.isArray(data) || data.length === 0) {
-        container.innerHTML = `<p>No changelogs available.</p>`;
-        return;
-        }
+          let html = '';
+          data.forEach(changelog => {
+            const date = new Date(changelog.created_at);
+            const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth()+1).padStart(2,'0')}/${date.getFullYear()}`;
 
-        // Sort newest first
-        data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            html += `<div id="changelog">
+                      <h4 class="changelog-date">${formattedDate}</h4>`;
+            changelog.lines.forEach(line => {
+              html += `<p>- ${line}</p>`;
+            });
+            html += `<div class="changelog-bottom"> </div>`
+            html += `</div>`;
+          });
 
-        let html = '';
+          container.innerHTML = html;
 
-        data.forEach(changelog => {
-        const date = new Date(changelog.created_at);
-        const formattedDate =
-            `${String(date.getDate()).padStart(2, '0')}/` +
-            `${String(date.getMonth() + 1).padStart(2, '0')}/` +
-            `${date.getFullYear()}`;
+      } catch (err) {
+          console.error('Falha ao carregar changelogs:', err);
+          container.innerHTML = `<p style="color:red;">Falha ao carregar changelogs.</p>`;
+      }
+  }
 
-        html += `
-            <div class="changelog-entry">
-            <h4 class="changelog-date">${formattedDate}</h4>
-            ${changelog.lines.map(line => `<p>- ${line}</p>`).join('')}
-            <div class="changelog-bottom"></div>
-            </div>
-        `;
-        });
-
-        container.innerHTML = html;
-
-    } catch (err) {
-        console.error('Failed to load changelogs:', err);
-        container.innerHTML = `<p style="color:red;">Failed to load changelogs.</p>`;
-    }
-    }
-    // 🔥 garante que o DOM já existe
-    document.addEventListener('DOMContentLoaded', loadChangelogs);
-    </script>
-
-  
-  loadChangelogs();
-
-</script>
+  // Garantir que o JS execute apenas após o DOM estar carregado
+  document.addEventListener('DOMContentLoaded', loadChangelogs);
+  </script>
   <script src="js/stores.js"></script>
 </body>
 </html>
