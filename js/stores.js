@@ -1,4 +1,4 @@
-const API_URL = "https://localhost:8443/status?token=MUDE_ESSE_TOKEN";
+const API_URL = "https://api.nox.lat:8443/status?token=MUDE_ESSE_TOKEN";
 
 // Converte MB para GB e formata
 function formatGB(mb) {
