@@ -1,11 +1,17 @@
-const API_URL = "https://api.nox.lat:8443/status?token=MUDE_ESSE_TOKEN";
+const API_URL = "https://localhost:8443/status?token=MUDE_ESSE_TOKEN";
+
+// Converte MB para GB e formata
+function formatGB(mb) {
+    if (!mb || isNaN(mb)) return '-';
+    return (mb / 1024).toFixed(1) + ' GB';
+}
 
 async function loadServerStatus() {
     try {
         const res = await fetch(API_URL);
         const data = await res.json();
 
-        document.getElementById('worldSize').innerText = data.world_size_mb + " MB";
+        document.getElementById('worldSize').innerText = formatGB(data.world_size_mb);
         document.getElementById('totalPlayers').innerText = data.total_joins;
         document.getElementById('players').innerText = `${data.online_players}/${data.max_players}`;
         document.getElementById('server-status').innerHTML =
@@ -48,7 +54,7 @@ async function loadPlayers() {
     }
 }
 
-// Carrega na inicialização
+// Carrega ao iniciar
 loadServerStatus();
 loadPlayers();
 
