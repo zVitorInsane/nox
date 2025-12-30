@@ -15,5 +15,13 @@
       "- Troca de anticheat (NoCheatPlus -> Grim -> Matrix)",
       "NOTA: Estamos utilizando o Matrix anticheat a partir de agora, para termos o melhor desempenho possível!"
     ]
+  },
+  {
+    "id": 3,
+    "created_at": "2025-12-31T00:00:00.000Z",
+    "lines": [
+      "Servidor atualizado:",
+      "- Limite de Speed pra ElytraFly"
+    ]
   }
 ]
